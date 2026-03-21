@@ -9,7 +9,7 @@ on:
       - synchronize
       - closed
     paths:
-      - "docs/sources/**"
+      - "../../../etc/**"
 
 jobs:
   deploy-pr-preview:
@@ -31,7 +31,7 @@ jobs:
             "index_file": "content/docs/loki/_index.md",
             "relative_prefix": "/docs/loki/latest/",
             "repo": "loki",
-            "source_directory": "docs/sources",
+            "source_directory": "../../../etc",
             "website_directory": "content/docs/loki/latest"
           }
         ]

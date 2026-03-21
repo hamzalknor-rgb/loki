@@ -7,7 +7,7 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
     paths:
-      - "docs/sources/**"
+      - "../../../etc/**"
   workflow_dispatch:
 jobs:
   sync:
