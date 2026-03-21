@@ -3,17 +3,9 @@ name: Deploy pr preview
 permissions: {}
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - closed
-    paths:
-      - "../../../etc/**"
-
+  push:
 jobs:
   deploy-pr-preview:
-    if: "!github.event.pull_request.head.repo.fork"
     uses: grafana/writers-toolkit/.github/workflows/deploy-preview.yml@main
     permissions:
       contents: read # Clone repositories.
